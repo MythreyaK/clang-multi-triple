@@ -69,6 +69,10 @@ RUN echo "Setting up sysroot"   \
     && popd                         \
     && echo "Done"
 
+ARG COMMON_COMPILE_FLAGS="-fno-omit-frame-pointer"
+
+ARG MUSL_TRIPLE_COMPILE_FLAGS="${COMMON_COMPILE_FLAGS}"
+
 COPY build-llvm.sh /tmp/scripts/
 RUN /tmp/scripts/build-llvm.sh
 
@@ -101,6 +105,7 @@ RUN git clone -b newlib-4.6.0 --depth=1 https://sourceware.org/git/newlib-cygwin
 ARG BUILD_TRIPLES="x86_64-unknown-none-elf;i386-unknown-none-elf"
 ARG BUILD_MARCHS="-m64;-m32"
 ARG BUILD_LIB_SUFFIX=";64"
+ARG BM_TRIPLE_COMPILE_FLAGS="-mno-red-zone -ffreestanding ${COMMON_COMPILE_FLAGS}"
 
 COPY build-newlib.sh /tmp/scripts
 RUN /tmp/scripts/build-newlib.sh

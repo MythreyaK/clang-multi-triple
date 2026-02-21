@@ -21,7 +21,7 @@ for triple in "${!TRIPLES_ARRAY[@]}"; do
     echo "Building triple $TRIPLE $MARCH"
     echo "=================================="
 
-    COMPILER_FLAGS="--target=$TRIPLE $MARCH $EXTRA_FLAGS -nostdinc++ -mno-red-zone -ffreestanding -fno-omit-frame-pointer"
+    COMPILER_FLAGS="--target=$TRIPLE $MARCH $EXTRA_FLAGS $BM_TRIPLE_COMPILE_FLAGS -nostdinc++"
 
     cmake   \
         -G Ninja \

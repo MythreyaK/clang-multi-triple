@@ -54,8 +54,8 @@ for triple in "${!TRIPLES_ARRAY[@]}"; do
         CC="$SYSROOT/usr/bin/clang"   \
         CXX="$SYSROOT/usr/bin/clang++" \
         AR="$SYSROOT/usr/bin/llvm-ar" \
-        CFLAGS="--target=$TRIPLE $MARCH -g -Wno-everything -O2 -mno-mmx -mno-red-zone -ffreestanding" \
-        CCASFLAGS="--target=$TRIPLE $MARCH -g -Wno-everything -O2 -mno-mmx -mno-red-zone -ffreestanding" \
+        CFLAGS="--target=$TRIPLE $MARCH -g -Wno-everything -O2 $BM_TRIPLE_COMPILE_FLAGS" \
+        CCASFLAGS="--target=$TRIPLE $MARCH -g -Wno-everything -O2 $BM_TRIPLE_COMPILE_FLAGS" \
 
     make -j
     make install -j

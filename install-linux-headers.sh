@@ -28,9 +28,6 @@ function install_linux_headers() {
         make headers            INSTALL_HDR_PATH=$LINUX_HEADER_INSTALL -j
         make headers_install    INSTALL_HDR_PATH=$LINUX_HEADER_INSTALL -j
 
-        # mkdir -p $SYSROOT/usr/include/$arch-pc-linux-musl
-        # rsync -a --remove-source-files /tmp/linux-headers/$arch/include/asm/ $SYSROOT/usr/include/$arch-pc-linux-musl/asm/
-
         mv $LINUX_HEADER_INSTALL/include/*     $LINUX_HEADER_INSTALL/
         rmdir $LINUX_HEADER_INSTALL/include
 
