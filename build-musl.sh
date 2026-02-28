@@ -34,7 +34,7 @@ for triple in "${!TRIPLES_ARRAY[@]}"; do
         CC=$SYSROOT/usr/bin/clang               \
         AR=$SYSROOT/usr/bin/llvm-ar             \
         RANLIB=$SYSROOT/usr/bin/llvm-ranlib     \
-        CFLAGS="--sysroot=$SYSROOT $MARCH -fuse-ld=lld -fstack-protector-strong -fstack-clash-protection -fno-omit-frame-pointer" \
+        CFLAGS="--sysroot=$SYSROOT $MARCH -fuse-ld=lld -fstack-protector-strong -fstack-clash-protection $COMMON_COMPILE_FLAGS" \
         LDFLAGS="--sysroot=$SYSROOT $MARCH -fuse-ld=lld" \
         LIBCC=$($SYSROOT/usr/bin/clang --print-resource-dir)/lib/$TRIPLE/libclang_rt.builtins.a
     make -j

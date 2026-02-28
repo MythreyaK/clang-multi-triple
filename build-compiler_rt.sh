@@ -19,7 +19,7 @@ for triple in "${!TRIPLES_ARRAY[@]}"; do
 
     $SYSROOT/usr/bin/clang --print-resource-dir
 
-    COMPILER_FLAGS="--target=$TRIPLE $MARCH -fno-omit-frame-pointer -nostdlib"
+    COMPILER_FLAGS="--target=$TRIPLE $MARCH $COMMON_COMPILE_FLAGS -nostdlib"
 
     cmake \
         -G Ninja \

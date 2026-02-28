@@ -9,7 +9,7 @@ echo "Resource dir: $($SYSROOT/usr/bin/clang --print-resource-dir)"
 IFS=';' read -ra TRIPLES_ARRAY <<< "$BUILD_TRIPLES"
 IFS=';' read -ra MARCHS_ARRAY <<< "$BUILD_MARCHS"
 
-EXTRA_FLAGS="-include stdio.h -Wno-nullability-completeness -Wno-user-defined-literals"
+EXTRA_FLAGS="-nostdinc++ -include stdio.h -Wno-nullability-completeness -Wno-user-defined-literals"
 
 echo "SYSROOT is $SYSROOT"
 
@@ -21,7 +21,7 @@ for triple in "${!TRIPLES_ARRAY[@]}"; do
     echo "Building triple $TRIPLE $MARCH"
     echo "=================================="
 
-    COMPILER_FLAGS="--target=$TRIPLE $MARCH $EXTRA_FLAGS $BM_TRIPLE_COMPILE_FLAGS -nostdinc++"
+    COMPILER_FLAGS="--target=$TRIPLE -I$SYSROOT/usr/include/$TRIPLE $MARCH $BM_TRIPLE_COMPILE_FLAGS $EXTRA_FLAGS"
 
     cmake   \
         -G Ninja \
@@ -84,7 +84,7 @@ for triple in "${!TRIPLES_ARRAY[@]}"; do
         # -DLIBCXX_HAS_PTHREAD_API=OFF            \
         # -DLIBCXX_HAS_EXTERNAL_THREAD_API=ON     \
 
-    rm -f include/c++/v1
+    # rm -f include/c++/v1
     cmake --build build-libcxx-runtimes-bm-$TRIPLE;
     cmake --install build-libcxx-runtimes-bm-$TRIPLE;
 done

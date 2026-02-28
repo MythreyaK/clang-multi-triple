@@ -44,7 +44,8 @@ RUN dnf install -y      \
 WORKDIR /tmp
 
 ARG MUSL_VER=1.2.5
-ARG LINUX_VER=6.18.5
+ARG LINUX_VER=6.19.3
+ARG LLVM_HASH=24b9655e3626d1440409406827132df12dbee448
 
 RUN echo "Downloading deps"         \
     && wget -qO- "https://musl.libc.org/releases/musl-${MUSL_VER}.tar.gz" | tar xz \
@@ -52,6 +53,8 @@ RUN echo "Downloading deps"         \
     && wget -qO- "https://www.kernel.org/pub/linux/kernel/v6.x/linux-${LINUX_VER}.tar.xz" | tar xJ \
     && mv linux-${LINUX_VER} linux  \
     && git clone --depth=1 https://github.com/llvm/llvm-project.git llvm-project \
+    && pushd llvm-project           \
+    && git checkout ${LLVM_HASH}    \
     && echo "Done"
 
 ARG SYSROOT=/sysroot
@@ -81,8 +84,8 @@ RUN dnf install nano tree -y
 COPY install-linux-headers.sh /tmp/scripts/
 RUN /tmp/scripts/install-linux-headers.sh
 
-ARG BUILD_TRIPLES="x86_64-pc-linux-musl;i386-pc-linux-musl"
-ARG BUILD_MARCHS="-m64;-m32"
+ARG BUILD_TRIPLES="i386-pc-linux-musl;x86_64-pc-linux-musl"
+ARG BUILD_MARCHS="-m32;-m64"
 ARG BUILD_LIB_SUFFIX=";64"
 
 COPY install-musl-headers.sh /tmp/scripts/
@@ -102,8 +105,8 @@ RUN /tmp/scripts/build-libcxx.sh
 RUN git clone -b newlib-4.6.0 --depth=1 https://sourceware.org/git/newlib-cygwin.git /tmp/newlib
 
 # baremetal
-ARG BUILD_TRIPLES="x86_64-unknown-none-elf;i386-unknown-none-elf"
-ARG BUILD_MARCHS="-m64;-m32"
+ARG BUILD_TRIPLES="i386-unknown-none-elf;x86_64-unknown-none-elf"
+ARG BUILD_MARCHS="-m32;-m64;"
 ARG BUILD_LIB_SUFFIX=";64"
 ARG BM_TRIPLE_COMPILE_FLAGS="-mno-red-zone -ffreestanding ${COMMON_COMPILE_FLAGS}"
 

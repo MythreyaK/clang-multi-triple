@@ -35,7 +35,7 @@ function install_musl_headers() {
             CC=$SYSROOT/usr/bin/clang               \
             AR=$SYSROOT/usr/bin/llvm-ar             \
             RANLIB=$SYSROOT/usr/bin/llvm-ranlib     \
-            CFLAGS="$arch_flag -fstack-protector-strong -fstack-clash-protection -fno-omit-frame-pointer"
+            CFLAGS="$arch_flag -fstack-protector-strong -fstack-clash-protection $COMMON_COMPILE_FLAGS"
 
         make install-headers
 
