@@ -45,14 +45,14 @@ WORKDIR /tmp
 
 ARG MUSL_VER=1.2.5
 ARG LINUX_VER=6.19.3
-ARG LLVM_HASH=24b9655e3626d1440409406827132df12dbee448
+ARG LLVM_HASH="mythreyak/triple-search-dir"
 
 RUN echo "Downloading deps"         \
     && wget -qO- "https://musl.libc.org/releases/musl-${MUSL_VER}.tar.gz" | tar xz \
     && mv musl-${MUSL_VER} musl     \
     && wget -qO- "https://www.kernel.org/pub/linux/kernel/v6.x/linux-${LINUX_VER}.tar.xz" | tar xJ \
     && mv linux-${LINUX_VER} linux  \
-    && git clone --depth=1 https://github.com/llvm/llvm-project.git llvm-project \
+    && git clone --depth=1 https://github.com/MythreyaK/llvm-project.git llvm-project \
     && pushd llvm-project           \
     && git checkout ${LLVM_HASH}    \
     && echo "Done"
