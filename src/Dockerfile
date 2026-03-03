@@ -45,16 +45,18 @@ WORKDIR /tmp
 
 ARG MUSL_VER=1.2.5
 ARG LINUX_VER=6.19.3
-ARG LLVM_HASH="mythreyak/triple-search-dir"
+ARG LLVM_BRANCH="mythreyak/triple-search-dir"
 
 RUN echo "Downloading deps"         \
     && wget -qO- "https://musl.libc.org/releases/musl-${MUSL_VER}.tar.gz" | tar xz \
     && mv musl-${MUSL_VER} musl     \
     && wget -qO- "https://www.kernel.org/pub/linux/kernel/v6.x/linux-${LINUX_VER}.tar.xz" | tar xJ \
     && mv linux-${LINUX_VER} linux  \
-    && git clone --depth=1 https://github.com/MythreyaK/llvm-project.git llvm-project \
+    && git clone                \
+        --depth=1               \
+        --branch ${LLVM_BRANCH} \
+        https://github.com/MythreyaK/llvm-project.git llvm-project \
     && pushd llvm-project           \
-    && git checkout ${LLVM_HASH}    \
     && echo "Done"
 
 ARG SYSROOT=/sysroot
@@ -104,7 +106,7 @@ RUN /tmp/scripts/build-libcxx.sh
 
 RUN git clone -b newlib-4.6.0 --depth=1 https://sourceware.org/git/newlib-cygwin.git /tmp/newlib
 
-# baremetal
+# x86 baremetal
 ARG BUILD_TRIPLES="i386-unknown-none-elf;x86_64-unknown-none-elf"
 ARG BUILD_MARCHS="-m32;-m64;"
 ARG BUILD_LIB_SUFFIX=";64"
