@@ -9,8 +9,10 @@ RUN dnf install -y      \
         wget            \
         swig            \
         file            \
-        cmake           \
         llvm            \
+        nano            \
+        tree            \
+        cmake           \
         clang           \
         rsync           \
         which           \
@@ -45,7 +47,7 @@ WORKDIR /tmp
 
 ARG MUSL_VER=1.2.5
 ARG LINUX_VER=6.19.3
-ARG LLVM_BRANCH="mythreyak/triple-search-dir"
+ARG LLVM_BRANCH="main"
 
 RUN echo "Downloading deps"         \
     && wget -qO- "https://musl.libc.org/releases/musl-${MUSL_VER}.tar.gz" | tar xz \

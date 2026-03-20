@@ -13,9 +13,6 @@ Currently supports these triples
     * `i386-unknown-none-elf` 
     * `x86_64-unknown-none-elf` 
 
-Curently uses my fork of [llvm-project/mythreyak/triple-search-dir](https://github.com/MythreyaK/llvm-project/tree/mythreyak/triple-search-dir), 
-which includes baremetal search paths in the driver logic (makes the .cfg file simpler). [Open PR](https://github.com/llvm/llvm-project/pull/183453).  
-
 riscv64 on musl and baremetal coming soon.
 
 ## Credits and references
