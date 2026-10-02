@@ -9,11 +9,13 @@ Currently supports these triples
 * musl:
     * `i386-pc-linux-musl`
     * `x86_64-pc-linux-musl`
+    * `riscv64-unknown-linux-musl`
 * baremetal (newlib):
     * `i386-unknown-none-elf` 
-    * `x86_64-unknown-none-elf` 
+    * `x86_64-unknown-none-elf`
+    * `riscv64-unknown-none-elf` 
 
-riscv64 on musl and baremetal coming soon.
+riscv64 on musl and baremetal need a custom build of clang, see my llvm fork (PR under review).
 
 ## Credits and references
 
